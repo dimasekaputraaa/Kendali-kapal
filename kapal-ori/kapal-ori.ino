@@ -20,6 +20,17 @@ long duration2;
 
 char command; // Variabel untuk menyimpan perintah dari Bluetooth
 
+void stopRobot() {
+  // Menghentikan robot
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(ENA, 0);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  digitalWrite(ENB, 0);
+  moving = false;
+}
+
 void setup() {
   Serial.begin(9600);
   bluetooth.begin(9600);
@@ -71,7 +82,7 @@ void loop() {
     command = bluetooth.read(); Serial.print(command);   //Pembacaan dan ditampilkan data yang masuk
     Serial.print("\n");
     //Data yang masuk
-    if (command == 'N') {
+    if (command == 'N' && !moving) {
       //maju
       digitalWrite(IN1, HIGH);
       digitalWrite(IN2, LOW);
@@ -79,8 +90,12 @@ void loop() {
       digitalWrite(IN3, HIGH);
       digitalWrite(IN4, LOW);
       digitalWrite(ENB, 255); // Kecepatan penuh
+       moving = true;
     }
-    else if (command == 'W') {
+    else if (command == 'N' && moving) {
+      stopRobot();
+    }
+    if (command == 'W' && !moving) {
       //kiri
       digitalWrite(IN1, HIGH);
       digitalWrite(IN2, LOW);
@@ -89,7 +104,10 @@ void loop() {
       digitalWrite(IN4, HIGH);
       digitalWrite(ENB, 255); // Mengatur kecepatan motor B (255 = 100%)
     }
-    else if (command == 'S') {
+    else if (command == 'W' && moving) {
+      stopRobot();
+    }
+     if (command == 'S' && !moving) {
       //mundur
       digitalWrite(IN1, LOW);
       digitalWrite(IN2, HIGH);
@@ -98,7 +116,10 @@ void loop() {
       digitalWrite(IN4, HIGH);
       digitalWrite(ENB, 255); // Kecepatan penuh
     }
-    else if (command == 'E') {
+    else if (command == 'S' && moving) {
+      stopRobot();
+    }
+     if (command == 'E' && !moving) {
       //kanan
       digitalWrite(IN1, LOW);
       digitalWrite(IN2, HIGH);
@@ -107,10 +128,16 @@ void loop() {
       digitalWrite(IN4, LOW);
       digitalWrite(ENB, 255); // Mengatur kecepatan motor B (128 = 50%)
     }
-    if(command == '3'){
+    else if (command == 'E' && moving) {
+      stopRobot();
+    }
+    if(command == '3' ){
       digitalWrite(IN8, HIGH);
       digitalWrite(IN9, LOW);
       }
+    // else if(command == '3' && run){
+
+    // }
       else if(command == '1'){
       digitalWrite(IN8, LOW);
       digitalWrite(IN9, LOW);
