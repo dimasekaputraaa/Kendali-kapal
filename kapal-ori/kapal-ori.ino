@@ -10,6 +10,7 @@ SoftwareSerial bluetooth(0, 1); // pin RX | TX
 
 #define IN8 2 // deklarasi pin IN1
 #define IN9 6  // deklarasi pin IN2
+bool moving = false;
 
 long duration;
 #define triggerPin 12
@@ -62,7 +63,7 @@ void loop() {
   int  jaraks = duration * 0.034 / 2;
   Serial.print("jarak ultra 1 : ");
   //int jarak = map(jaraks, 0, 1024, 255, 0);
-  Serial.print(jarak);
+  Serial.print(jaraks);
   Serial.println(" cm");
 //s
   digitalWrite(triggerPin2, LOW);
@@ -74,7 +75,7 @@ void loop() {
   int  jaraks2 = duration2 * 0.034 / 2;
   Serial.print("jarak ultra 2 : ");
   //int jarak2 = map(jaraks2, 0, 1024, 255, 0);
-  Serial.print(jarak2);
+  Serial.print(jaraks2);
   Serial.println(" cm");
 
   if (bluetooth.available() > 0)
