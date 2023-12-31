@@ -53,7 +53,7 @@ void loop() {
   //int jarak = map(jaraks, 0, 1024, 255, 0);
   Serial.print(jarak);
   Serial.println(" cm");
-
+//s
   digitalWrite(triggerPin2, LOW);
   delayMicroseconds(2);
   digitalWrite(triggerPin2, HIGH);
@@ -119,8 +119,3 @@ void loop() {
   }
 
 }
-
-float jarakJauh(float jarakBenda){
-  float nilaiKondisiJauh = 0;
-  if (jarakBenda <= 
-  }
